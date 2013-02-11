@@ -61,10 +61,10 @@ module SSI
         (puts optparse.help; exit 1) if ARGV.empty?
         ARGV.each do |fdname|
           @logger.info("Reading file '#{fdname}'")
-          options[:fd_dir_path] = File::dirname(File::expand_path(fdname))
-          @logger.info("Path: #{options[:fd_dir_path]}")
+          dir_path = File::dirname(File::expand_path(fdname))
+          @logger.info("Path: #{dir_path}")
           ssi_obj = SSI.new(options)
-          ssi_obj.ssi(File.read(fdname))
+          ssi_obj.ssi(dir_path, File.read(fdname))
         end
 #            nodename = ARGV.shift
 #            if ARGV.empty?

@@ -23,17 +23,19 @@ module SSI
       @options = options
     end
 
-    def ssi_include(kvs)
-      SSI.info("call include: #{kvs.inspect}")
+    def ssi_include(dir_path, kvs)
       include_content = ''
       kvs.each do |type,filelist|
         filelist.each do |fdname| 
           if (fdname[0,1] == '/')
             fdname.gsub!(/^\//,'')
-            include_content << File.read(File::expand_path(fdname, @options[:root_dir]))
+            file_path = File::expand_path(fdname, @options[:root_dir])
           else
-            include_content << File.read(File::expand_path(fdname, @options[:fd_dir_path]))
+            file_path = File::expand_path(fdname, dir_path)
           end
+          new_dir_path = File::dirname(file_path)
+          SSI.debug("Including content from #{file_path}") if @options[:verbose]
+          include_content << ssi(new_dir_path, File.read(file_path))
         end
       end
       include_content
@@ -53,9 +55,9 @@ module SSI
     #
     # scan for ssi commands
     #
-    def ssi(content)
+    def ssi(dir_path, content)
       
-      SSI.info("parsing content")
+      SSI.info("Scanning content...") if options[:verbose]
       outmap = {}
 
       content.scan(/(<!--#(.*)-->)/) do|m|
@@ -65,7 +67,7 @@ module SSI
 
       outmap.each do|k,v|
         cmd, kvs = ssi_parser(v[:ssi])
-        content.sub!(k,send(SSICommands[cmd.to_sym],kvs))
+        content.sub!(k,send(SSICommands[cmd.to_sym], dir_path, kvs))
       end
 
       puts content
