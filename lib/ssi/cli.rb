@@ -55,9 +55,6 @@ module SSI
 
         optparse.parse!
 
-        p options
-        p ARGV
-
         (puts optparse.help; exit 1) if ARGV.empty?
         ARGV.each do |fdname|
           @logger.info("Reading file '#{fdname}'")
