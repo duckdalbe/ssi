@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'pp'
 
 module SSI
   class SSI
