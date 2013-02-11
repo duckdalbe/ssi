@@ -6,6 +6,7 @@ require 'optparse'
 require 'ssi'
 require 'ssi/version'
 autoload :Console_logger, "ssi/console_logger"
+autoload :FileUtils, "fileutils"
 
 module SSI
   class CLI
@@ -57,18 +58,21 @@ module SSI
 
         (puts optparse.help; exit 1) if ARGV.empty?
         ARGV.each do |fdname|
-          @logger.info("Reading file '#{fdname}'")
+          @logger.debug("Reading file '#{fdname}'") if options[:verbose]
           dir_path = File::dirname(File::expand_path(fdname))
-          @logger.info("Path: #{dir_path}")
+          @logger.debug("Path:'#{dir_path}'") if options[:verbose]
           ssi_obj = SSI.new(options)
-          ssi_obj.ssi(dir_path, File.read(fdname))
+          content = ssi_obj.ssi(dir_path, File.read(fdname))
+          if options[:inplace]
+            #File.copy(fdname, fdname + options[:extension]) if options[:extension]
+            FileUtils.cp(fdname, fdname + options[:extension]) if (options[:extension] != '')
+            File.open(fdname, 'w') do |fd|
+              fd.write(content)
+            end
+          else
+            puts content
+          end
         end
-#            nodename = ARGV.shift
-#            if ARGV.empty?
-#              yaml_data = $stdin.read
-#            else
-#              yaml_file = ARGV.shift
-#              yaml_data = File.new(yaml_file).read
       end
     end
   end
