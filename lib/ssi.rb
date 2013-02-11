@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'pp'
 
 module SSI
   class SSI
@@ -58,7 +59,7 @@ module SSI
     def ssi(dir_path, content)
       outmap = {}
 
-      content.scan(/(<!--#(.*)-->)/) do|m|
+      content.scan(/(<!--#(.*?)-->)/) do|m|
         outmap[m.first] = {}
         outmap[m.first][:ssi] = m.last.strip # store for processing later
       end
