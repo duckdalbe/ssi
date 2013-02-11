@@ -56,8 +56,6 @@ module SSI
     # scan for ssi commands
     #
     def ssi(dir_path, content)
-      
-      SSI.info("Scanning content...") if options[:verbose]
       outmap = {}
 
       content.scan(/(<!--#(.*)-->)/) do|m|
@@ -70,7 +68,6 @@ module SSI
         content.sub!(k,send(SSICommands[cmd.to_sym], dir_path, kvs))
       end
 
-      puts content
       content
     end
   end
