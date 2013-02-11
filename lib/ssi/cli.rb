@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-#require 'subcommand'
 require 'optparse'
 require 'ssi'
 require 'ssi/version'
