@@ -25,7 +25,7 @@ module SSI
         options = {}
         optparse = OptionParser.new do |opts|
           options[:root_dir] = '.'
-          opts.banner = "Usage: ", $PROGRAM_NAME, " [options] filename"
+          opts.banner = "Usage: ", $PROGRAM_NAME, " [options] filename [filename] [...]"
 
           opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
             options[:verbose] = v
