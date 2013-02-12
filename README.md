@@ -7,8 +7,8 @@ service like [Amazon's S3](http://aws.amazon.com/s3/).
 
 Information about server-side includes can be found at the
 [httpd](http://httpd.apache.org/docs/2.2/howto/ssi.html) or
-[nginx](http://wiki.nginx.org/HttpSsiModule) website. The only SSI supported at
-this time is `include`.
+[nginx](http://wiki.nginx.org/HttpSsiModule) website. The only SSI command
+supported at this time is `include`.
 
 The processing is recursive so please avoid circular includes.
 
@@ -33,7 +33,7 @@ We will usually modify the files `inplace`. This will be done like so:
 
 This will modify `file1` and `file2` after making a backup of each file with
 the `.orig` extension. Use the empty string '' if you do not want to make
-backups. CAUTION: The `inplace` option will overwrite the original if run
+backups. CAUTION: The `inplace` option will overwrite the backup if run
 consecutively!
 
 When processing the server-side includes for a many files under the current
