@@ -2,10 +2,10 @@
 
 require 'rubygems'
 require 'optparse'
+require "fileutils"
 require 'ssi'
 require 'ssi/version'
-autoload :Console_logger, "ssi/console_logger"
-autoload :FileUtils, "fileutils"
+require "ssi/console_logger"
 
 module SSI
   class CLI

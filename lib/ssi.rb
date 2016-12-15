@@ -2,9 +2,6 @@ require 'rubygems'
 
 module SSI
   class SSI
-    autoload :Console_logger, "ssi/console_logger"
-
-    @logger = Console_logger
 
     SSICommands = {
       :include => 'ssi_include',
@@ -13,10 +10,13 @@ module SSI
     attr_reader :options
 
     class << self
-      def info(msg); @logger.info(msg); end
-      def warn(msg); @logger.warn(msg); end
-      def debug(msg); @logger.debug(msg); end
+      def info(msg); logger.info(msg); end
+      def warn(msg); logger.warn(msg); end
+      def debug(msg); logger.debug(msg); end
 
+      def logger
+        @logger ||= ::SSI::Console_logger
+      end
     end
 
     def initialize(options = {})
