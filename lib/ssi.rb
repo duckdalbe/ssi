@@ -63,7 +63,9 @@ module SSI
 
       outmap.each do|k,v|
         cmd, kvs = ssi_parser(v[:ssi])
-        content.sub!(k,send(SSICommands[cmd.to_sym], dir_path, kvs))
+        if SSICommands.include?(cmd.to_sym)
+          content.sub!(k,send(SSICommands[cmd.to_sym], dir_path, kvs))
+        end
       end
 
       content
