@@ -1,5 +1,3 @@
-require 'rubygems'
-
 module SSI
   class SSI
 
