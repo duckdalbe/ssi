@@ -69,6 +69,9 @@ module SSI
       end
 
       content
+    rescue => exc
+      $stderr.puts "Error: #{exc} (at #{exc.backtrace.first})"
+      exit 1
     end
   end
 end
